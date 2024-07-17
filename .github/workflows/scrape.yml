@@ -3,7 +3,7 @@ name: Scrape Opinion World Dashboard
 on:
   schedule:
     - cron: '*/30 * * * *'  # Run every 30 minutes (UTC)
-
+  workflow_dispatch:
 jobs:
   scrape:
     runs-on: ubuntu-latest
