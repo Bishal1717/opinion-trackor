@@ -54,8 +54,6 @@ async function scrape() {
         console.log('Cookies popup not found or already accepted');
     }
 
-    // Take a screenshot for debugging
-    await page.screenshot({ path: 'available_surveys.png' });
 
     // Check for surveys
     const surveyAvailable = await page.evaluate(() => {
