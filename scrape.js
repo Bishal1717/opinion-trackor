@@ -54,6 +54,8 @@ async function scrape() {
     }
 
 
+    console.log(HTML: document)
+
     // Check for surveys
     const surveyAvailable = await page.evaluate(() => {
         return document.querySelector('.list-group-item') !== null; // Ensure this selector is correct
