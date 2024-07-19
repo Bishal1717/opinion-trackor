@@ -59,11 +59,11 @@ async function scrape() {
     }
 
 
-    console.log("HTML:", document.body.outerHTML);
-
+    
 
     // Check for surveys
     const surveyAvailable = await page.evaluate(() => {
+        console.log("HTML:", document.body.outerHTML);
         return document.querySelector('.list-group-item') !== null; // Ensure this selector is correct
     });
 
