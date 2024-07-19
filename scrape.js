@@ -54,7 +54,8 @@ async function scrape() {
     }
 
 
-    console.log(HTML: document)
+    console.log("HTML:", document.body.outerHTML);
+
 
     // Check for surveys
     const surveyAvailable = await page.evaluate(() => {
