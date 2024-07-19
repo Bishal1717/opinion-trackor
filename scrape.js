@@ -16,16 +16,12 @@ const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 async function scrape() {
-    const browser = await puppeteer.launch({
-        // Add any necessary launch options
-        headless: true,  // or false if you need to see the browser window
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
+    const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 800 });
 
     // Set User-Agent to appear as a regular browser
-   await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
 
     await page.goto('https://www.opinionworld.in/');
     console.log('Navigated to Opinion World');
@@ -58,12 +54,12 @@ async function scrape() {
         console.log('Cookies popup not found or already accepted');
     }
 
+    const pageContent = await page.content();
+    console.log('Dashboard HTML content:', pageContent);
 
-    
 
     // Check for surveys
     const surveyAvailable = await page.evaluate(() => {
-        console.log("HTML:", document.body.outerHTML);
         return document.querySelector('.list-group-item') !== null; // Ensure this selector is correct
     });
 
