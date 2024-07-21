@@ -54,6 +54,12 @@ async function scrape() {
         console.log('Cookies popup not found or already accepted');
     }
 
+    // Refresh the page
+    await page.reload({ waitUntil: 'networkidle0' });
+    console.log('Page refreshed');
+
+    
+
 
     // Check for surveys
     const surveyAvailable = await page.evaluate(() => {
