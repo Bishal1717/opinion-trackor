@@ -58,13 +58,20 @@ async function scrape() {
     await page.reload({ waitUntil: 'networkidle0' });
     console.log('Page refreshed');
 
-    
+    // Define polling interval and duration
+    const pollingInterval = 5000; // 5 seconds
+    const pollingDuration = 30000; // 1 minute
+    const startTime = Date.now();
+    let surveyAvailable = false;
 
-
-    // Check for surveys
-    const surveyAvailable = await page.evaluate(() => {
-        return document.querySelector('.list-group-item') !== null; // Ensure this selector is correct
-    });
+    // Polling mechanism
+    while (Date.now() - startTime < pollingDuration && !surveyAvailable) {
+        await page.waitForTimeout(pollingInterval);
+        surveyAvailable = await page.evaluate(() => {
+            return document.querySelector('.list-group-item') !== null; // Ensure this selector is correct
+        });
+        console.log('Checked for surveys:', surveyAvailable ? 'Found' : 'Not found');
+    }
 
     if (surveyAvailable) {
         try {
@@ -76,6 +83,8 @@ async function scrape() {
         } catch (error) {
             console.error('Error sending Telegram message:', error.response ? error.response.data : error.message);
         }
+    } else {
+        console.log('No surveys available after polling.');
     }
 
     await browser.close();
