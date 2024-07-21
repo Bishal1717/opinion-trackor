@@ -66,8 +66,7 @@ async function scrape() {
 
     // Polling mechanism
     while (Date.now() - startTime < pollingDuration && !surveyAvailable) {
-        await page.evaluate(() => new Promise(resolve => setTimeout(resolve, pollingInterval)));
-
+        await page.evaluate(interval => new Promise(resolve => setTimeout(resolve, interval)), pollingInterval);
         surveyAvailable = await page.evaluate(() => {
             return document.querySelector('.list-group-item') !== null; // Ensure this selector is correct
         });
